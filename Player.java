@@ -1,83 +1,38 @@
-package aa;
+package Projekat4;
+public class Player extends GameObject {
+    private String name;
+    private int health;
 
- class Player {
-	private String name;
-	private int pozitionX;
-	private int pozitionY;
-	private int width;
-	private int height;
-	private int health;
+    public Player(String name, int x, int y, Collidable c, int health) {
+        super(x, y, c);
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException();
+        String[] parts = name.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String p : parts) {
+            sb.append(Character.toUpperCase(p.charAt(0)))
+              .append(p.substring(1).toLowerCase())
+              .append(" ");
+        }
+        this.name = sb.toString().trim();
+        if (health < 0 || health > 100) throw new IllegalArgumentException();
+        this.health = health;
+    }
 
-	public Player(String name, int pozitionX, int pozitionY, int width, int height, int health) {
-		this.name = name;
-		this.pozitionX = pozitionX;
-		this.pozitionY = pozitionY;
-		this.width = width;
-		this.height = height;
-		this.health = health;
+    public int getHealth() { return health; }
 
-	}
+    public void setHealth(int h) {
+        if (h < 0) h = 0;
+        if (h > 100) throw new IllegalArgumentException();
+        this.health = h;
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getDisplayName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		if(name.isEmpty()) {
-			this.name = "Player";
-		}
-		else
-		this.name = name;
-	}
-
-	public int getPozitionX() {
-		return pozitionX;
-	}
-
-	public void setPozitionX(int pozitionX) {
-		this.pozitionX = pozitionX;
-	}
-
-	public int getPozitionY() {
-		return pozitionY;
-	}
-
-	public void setPozitionY(int pozitionY) {
-		this.pozitionY = pozitionY;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getHealth() {
-		if (getHealth() < 0 ) {
-			health = 0;
-			} else if (getHealth() > 100) {
-				health = 100;
-				} else {
-					return health;
-			
-		
-
-			}
-		return health;
-		}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
+    @Override
+    public String toString() {
+        return "Player[" + name + "] (" + x + "," + y + ") HP=" + health;
+    }
 }
